@@ -1,11 +1,13 @@
 <template>
   <div class="container" @mousemove="onMouseMove">
+    <Morphing />
     <Decorations ref="decorationRef" />
   </div>
 </template>
 
 <script setup>
 import gsap from "gsap";
+import Morphing from "@/components/Morphing.vue";
 import Decorations from "@/components/Decorations.vue";
 
 const decorationRef = ref();
