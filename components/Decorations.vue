@@ -19,6 +19,8 @@ defineExpose({ deRef1, deRef2, deRef3, deRef4 });
 <style lang="scss" scoped>
 .decorations {
   position: absolute;
+  opacity: 0;
+  z-index: 2;
 }
 #de1 {
   width: 100vw;
