@@ -23,21 +23,23 @@ const introText = [
   color: #ffffff;
   font-size: 5vw;
   font-weight: 900;
-  animation: word 7s infinite ease-in-out;
+  opacity: 0;
+  animation: word 3s forwards ease-in-out;
   @for $i from 1 through 3 {
     &:nth-child(#{$i}) {
-      animation-delay: $i - 7s;
+      animation-delay: $i + 0s;
     }
   }
   @keyframes word {
-    0%,
-    5%,
-    100% {
+    0% {
+      filter: blur(1em);
+      opacity: 0;
+    }
+    50% {
       filter: blur(0);
       opacity: 1;
     }
-    20%,
-    80% {
+    100% {
       filter: blur(1em);
       opacity: 0;
     }

@@ -1,7 +1,7 @@
 <template>
   <div ref="containerRef" class="container" @mousemove="onMouseMove">
     <Morphing />
-    <Open ref="circleRef" />
+    <Open />
     <Decorations ref="decorationRef" />
   </div>
 </template>
@@ -13,8 +13,6 @@ import Open from "@/components/Open.vue";
 import Decorations from "@/components/Decorations.vue";
 
 const containerRef = ref();
-
-const circleRef = ref();
 
 const decorationRef = ref();
 const decorationArr = ref([]);
@@ -41,20 +39,8 @@ const onResize = () => {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty("--vh", `${vh}px`);
 };
-onMounted(() => {
-  // open
-  gsap.from(circleRef.value.circleRef, {
-    duration: 4,
-    scale: 0,
-    ease: "power2.out",
-    // delay: 3.5,
-    delay: 10,
-    onComplete: () => {
-      containerRef.value.style.background = "#ffffff";
-      containerRef.value.style.filter = "contrast(25) blur(1px)";
-    },
-  });
 
+onMounted(() => {
   // decoration
   const { deRef1, deRef2, deRef3, deRef4 } = decorationRef.value;
   decorationArr.value.push(deRef1, deRef2, deRef3, deRef4);
@@ -67,13 +53,9 @@ onMounted(() => {
 <style lang="scss">
 .container {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  width: 101%;
-  height: calc(var(--vh) * 101);
-  background: #000000;
-  filter: contrast(25) blur(1px);
+  width: 100%;
+  height: calc(var(--vh) * 100);
+  background: #151515;
   z-index: 1;
 }
 </style>

@@ -1,23 +1,48 @@
 <template>
-  <div ref="circleRef" class="circle" />
+  <div class="circle-container">
+    <div ref="circleRef1" class="circle" />
+    <div ref="circleRef2" class="circle" />
+  </div>
 </template>
 
 <script setup>
-const circleRef = ref();
+import gsap from "gsap";
 
-defineExpose({ circleRef });
+const circleRef1 = ref();
+const circleRef2 = ref();
+
+onMounted(() => {
+  gsap.from([circleRef1.value, circleRef2.value], {
+    duration: 4,
+    scale: 0,
+    ease: "power2.out",
+    delay: 5,
+  });
+});
 </script>
 
 <style lang="scss" scoped>
-.circle {
+.circle-container {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  width: 300%;
-  padding-bottom: 300%;
-  background: white;
-  border-radius: 50%;
-  z-index: 2;
+  width: 100%;
+  height: calc(var(--vh) * 100);
+  .circle {
+    position: absolute;
+    width: 300%;
+    padding-bottom: 300%;
+    background: white;
+    border-radius: 50%;
+    z-index: 2;
+    &:nth-child(1) {
+      top: 0;
+      left: 0;
+      transform: translate3d(-50%, -50%, 0);
+    }
+    &:nth-child(2) {
+      bottom: 0;
+      right: 0;
+      transform: translate3d(50%, 50%, 0);
+    }
+  }
 }
 </style>
