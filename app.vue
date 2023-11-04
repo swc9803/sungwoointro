@@ -5,19 +5,28 @@
 </template>
 
 <script setup>
+import gsap from "gsap";
 import Decorations from "@/components/Decorations.vue";
 
 const decorationRef = ref();
+const decorationArr = ref([]);
+
+const mouse = reactive({
+  x: 0,
+  y: 0,
+});
 
 const onMouseMove = (e) => {
-  decorationRef.value.deRef1.style.top = `${e.clientY / 100}px`;
-
-  decorationRef.value.deRef2.style.right = `${e.clientX / 100}px`;
-
-  decorationRef.value.deRef3.style.bottom = `${e.clientY / 100}px`;
-
-  decorationRef.value.deRef4.style.left = `${e.clientX / 100}px`;
-  // 가운데가 최댓값이 되도록 수정 필요
+  mouse.x = e.pageX - window.innerWidth / 2;
+  mouse.y = e.pageY - window.innerHeight / 2;
+  const imgX = (mouse.x / window.innerWidth) * 50;
+  const imgY = (mouse.y / window.innerHeight) * 50;
+  gsap.to(decorationArr.value, {
+    x: imgX,
+    y: imgY,
+    duration: 1,
+    ease: "power.in",
+  });
 };
 
 const onResize = () => {
@@ -25,6 +34,9 @@ const onResize = () => {
   document.documentElement.style.setProperty("--vh", `${vh}px`);
 };
 onMounted(() => {
+  const { deRef1, deRef2, deRef3, deRef4 } = decorationRef.value;
+  decorationArr.value.push(deRef1, deRef2, deRef3, deRef4);
+
   onResize();
   window.addEventListener("resize", onResize);
 });
