@@ -17,6 +17,8 @@ const containerRef = ref();
 const decorationRef = ref();
 const decorationArr = ref([]);
 
+const decoTl = gsap.timeline({ paused: true });
+
 const mouse = reactive({
   x: 0,
   y: 0,
@@ -42,8 +44,16 @@ const onResize = () => {
 
 onMounted(() => {
   // decoration
-  const { deRef1, deRef2, deRef3, deRef4 } = decorationRef.value;
-  decorationArr.value.push(deRef1, deRef2, deRef3, deRef4);
+  const { decoRef1, decoRef2, decoRef3 } = decorationRef.value;
+  decorationArr.value.push(decoRef1, decoRef2, decoRef3);
+
+  decoTl.to(decorationArr.value, {
+    duration: 5,
+    strokeDashoffset: 0,
+    ease: "linear",
+    delay: 5,
+  });
+  decoTl.play();
 
   onResize();
   window.addEventListener("resize", onResize);
