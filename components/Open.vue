@@ -16,7 +16,7 @@ onMounted(() => {
     duration: 4,
     scale: 0,
     ease: "power2.out",
-    delay: 5,
+    delay: 7,
   });
 });
 </script>

@@ -1,41 +1,15 @@
 <template>
-  <div ref="containerRef" class="container" @mousemove="onMouseMove">
-    <Morphing />
-    <Open />
-    <Decorations ref="decorationRef" />
+  <div class="container">
+    <!-- <Morphing />
+    <Open /> -->
+    <TunnelScroll />
   </div>
 </template>
 
 <script setup>
-import gsap from "gsap";
-import Morphing from "@/components/Morphing.vue";
-import Open from "@/components/Open.vue";
-import Decorations from "@/components/Decorations.vue";
-
-const containerRef = ref();
-
-const decorationRef = ref();
-const decorationArr = ref([]);
-
-const decoTl = gsap.timeline({ paused: true });
-
-const mouse = reactive({
-  x: 0,
-  y: 0,
-});
-
-const onMouseMove = (e) => {
-  mouse.x = e.pageX - window.innerWidth / 2;
-  mouse.y = e.pageY - window.innerHeight / 2;
-  const imgX = (mouse.x / window.innerWidth) * 50;
-  const imgY = (mouse.y / window.innerHeight) * 50;
-  gsap.to(decorationArr.value, {
-    x: imgX,
-    y: imgY,
-    duration: 1,
-    ease: "power.in",
-  });
-};
+// import Morphing from "@/components/Morphing.vue";
+// import Open from "@/components/Open.vue";
+import TunnelScroll from "@/components/TunnelScroll.vue";
 
 const onResize = () => {
   const vh = window.innerHeight * 0.01;
@@ -43,18 +17,6 @@ const onResize = () => {
 };
 
 onMounted(() => {
-  // decoration
-  const { decoRef1, decoRef2, decoRef3 } = decorationRef.value;
-  decorationArr.value.push(decoRef1, decoRef2, decoRef3);
-
-  decoTl.to(decorationArr.value, {
-    duration: 5,
-    strokeDashoffset: 0,
-    ease: "linear",
-    delay: 5,
-  });
-  decoTl.play();
-
   onResize();
   window.addEventListener("resize", onResize);
 });
