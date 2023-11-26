@@ -7,6 +7,7 @@
 
 <script setup>
 import * as THREE from "three";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -18,6 +19,12 @@ let renderer;
 let raf;
 
 const scene = new THREE.Scene();
+const setupBackground = () => {
+  new RGBELoader().load("/pure_sky.hdr", (texture) => {
+    texture.mapping = THREE.EquirectangularReflectionMapping;
+    scene.background = texture;
+  });
+};
 
 const points = [
   [240, 90],
@@ -107,6 +114,7 @@ onMounted(() => {
   );
 
   onResize();
+  setupBackground();
   animate();
 
   window.addEventListener("resize", onResize);
