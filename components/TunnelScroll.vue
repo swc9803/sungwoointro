@@ -33,14 +33,18 @@ const points = [
   [230, 190],
   [250, 250],
   [50, 300],
+  [100, 350],
+  [200, 400],
+  [300, 450],
+  [400, 500],
 ];
 const createTube = (path, index, color) => {
-  const geometry = new THREE.TubeGeometry(path, 100, index * 2 + 10, 10, false);
+  const geometry = new THREE.TubeGeometry(path, 200, index * 2 + 10, 6, false);
   const material = new THREE.MeshBasicMaterial({
     color,
     transparent: true,
     wireframe: true,
-    opacity: (1 - index / 5) * 0.1 + 0.05,
+    opacity: (1 - index / 5) * 0.2 + 0.05,
   });
   return new THREE.Mesh(geometry, material);
 };
@@ -51,7 +55,7 @@ const path = new THREE.CatmullRomCurve3(
       new THREE.Vector3(point[0], (Math.random() - 0.5) * 250, point[1]),
   ),
 );
-const colors = [0xff6138, 0xffff9d, 0xbeeb9f, 0x79bd8f, 0x00a388];
+const colors = [0x38cfff, 0xbeeb9f, 0xffff9d];
 const setupModel = () => {
   colors.forEach((color, index) => {
     const tube = createTube(path, index, color);
@@ -145,6 +149,6 @@ onBeforeUnmount(() => {
 }
 .scroll {
   position: absolute;
-  height: 1000vh; // vh? +=10000?
+  height: 1500vh; // vh? +=10000?
 }
 </style>
