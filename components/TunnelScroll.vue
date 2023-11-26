@@ -34,6 +34,16 @@ const points = [
   [250, 250],
   [50, 300],
 ];
+const createTube = (path, index, color) => {
+  const geometry = new THREE.TubeGeometry(path, 100, index * 2 + 10, 10, false);
+  const material = new THREE.MeshBasicMaterial({
+    color,
+    transparent: true,
+    wireframe: true,
+    opacity: (1 - index / 5) * 0.1 + 0.05,
+  });
+  return new THREE.Mesh(geometry, material);
+};
 
 const path = new THREE.CatmullRomCurve3(
   points.map(
@@ -41,19 +51,13 @@ const path = new THREE.CatmullRomCurve3(
       new THREE.Vector3(point[0], (Math.random() - 0.5) * 250, point[1]),
   ),
 );
-
 const colors = [0xff6138, 0xffff9d, 0xbeeb9f, 0x79bd8f, 0x00a388];
-colors.forEach((color, index) => {
-  const geometry = new THREE.TubeGeometry(path, 100, index * 2 + 4, 10, false);
-  const material = new THREE.MeshBasicMaterial({
-    color,
-    transparent: true,
-    wireframe: true,
-    opacity: (1 - index / 5) * 0.5 + 0.1,
+const setupModel = () => {
+  colors.forEach((color, index) => {
+    const tube = createTube(path, index, color);
+    scene.add(tube);
   });
-  const tube = new THREE.Mesh(geometry, material);
-  scene.add(tube);
-});
+};
 
 const animate = () => {
   renderer.render(scene, camera);
@@ -115,6 +119,7 @@ onMounted(() => {
 
   onResize();
   setupBackground();
+  setupModel();
   animate();
 
   window.addEventListener("resize", onResize);
