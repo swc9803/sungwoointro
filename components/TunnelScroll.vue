@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="canvasRef" class="canvas" />
+    <div ref="canvasRef" class="canvas" @mousemove="onMouseMove" />
     <div ref="scrollRef" class="scroll" />
   </div>
 </template>
@@ -19,6 +19,7 @@ let renderer;
 let raf;
 
 const scene = new THREE.Scene();
+// fog 필요
 const setupBackground = () => {
   new RGBELoader().load("/pure_sky.hdr", (texture) => {
     texture.mapping = THREE.EquirectangularReflectionMapping;
@@ -27,33 +28,26 @@ const setupBackground = () => {
 };
 
 const points = [
-  [240, 90],
-  [340, 130],
-  [320, 150],
-  [230, 190],
-  [250, 250],
-  [50, 300],
-  [100, 350],
-  [200, 400],
-  [300, 450],
-  [400, 500],
+  [260, 150, 100],
+  [320, 200, 140],
+  [340, 150, 180],
+  [440, 200, 200],
+  [500, 150, 220],
+  [540, 170, 240],
 ];
 const createTube = (path, index, color) => {
-  const geometry = new THREE.TubeGeometry(path, 200, index * 2 + 10, 6, false);
+  const geometry = new THREE.TubeGeometry(path, 70, index * 2 + 10, 6, false);
   const material = new THREE.MeshBasicMaterial({
     color,
     transparent: true,
     wireframe: true,
-    opacity: (1 - index / 5) * 0.2 + 0.05,
+    opacity: (1 - index / 5) * 0.15 + 0.01,
   });
   return new THREE.Mesh(geometry, material);
 };
 
 const path = new THREE.CatmullRomCurve3(
-  points.map(
-    (point) =>
-      new THREE.Vector3(point[0], (Math.random() - 0.5) * 250, point[1]),
-  ),
+  points.map((point) => new THREE.Vector3(point[0], point[1], point[2])),
 );
 const colors = [0x38cfff, 0xbeeb9f, 0xffff9d];
 const setupModel = () => {
@@ -63,11 +57,28 @@ const setupModel = () => {
   });
 };
 
+const setupImage = () => {
+  const textureLoader = new THREE.TextureLoader();
+  const texture = textureLoader.load("/test_img.jpg");
+  const material = new THREE.MeshBasicMaterial({ map: texture });
+  const geometry = new THREE.BoxGeometry(10, 10, 10);
+  const mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+  mesh.position.set(280, 150, 120);
+};
+
 const animate = () => {
   renderer.render(scene, camera);
 
   raf = requestAnimationFrame(animate);
 };
+
+const mouse = reactive({
+  x: 0,
+  y: 0,
+});
+
+const onMouseMove = () => {};
 
 const onResize = () => {
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -79,8 +90,12 @@ const onResize = () => {
 
 onMounted(() => {
   window.scrollTo(0, 0);
+  mouse.x = canvasRef.value.offsetWidth / 2;
+  mouse.y = canvasRef.value.offsetHeight / 2;
 
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer = new THREE.WebGLRenderer({
+    antialias: true,
+  });
 
   camera = new THREE.PerspectiveCamera(
     80,
@@ -124,6 +139,7 @@ onMounted(() => {
   onResize();
   setupBackground();
   setupModel();
+  setupImage();
   animate();
 
   window.addEventListener("resize", onResize);

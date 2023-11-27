@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="aoo">
     <!-- <Morphing />
     <Open /> -->
     <TunnelScroll />
@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-.container {
+.app {
   position: fixed;
   width: 100%;
   height: calc(var(--vh) * 100);
