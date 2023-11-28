@@ -78,7 +78,21 @@ const mouse = reactive({
   y: 0,
 });
 
-const onMouseMove = () => {};
+const onMouseMove = (e) => {
+  mouse.x = e.pageX - window.innerWidth / 2;
+  mouse.y = e.pageY - window.innerHeight / 2;
+  const imgX = mouse.x / window.innerWidth;
+  const imgY = mouse.y / window.innerHeight;
+
+  gsap.to(camera.position, {
+    x: `+=${imgX}`,
+    y: `+=${imgY}`,
+    duration: 0.3,
+    ease: "power3",
+  });
+  // three js에서 마우스 위치에 따라 카메라가 바라보는 방향을 현재 카메라가 바라보는 방향에서 imgX, imgY값만큼 추가해주고 싶어
+  // 위 코드에서 카메라 위치 말고 카메라가 바라보는 방향을 수정해줘
+};
 
 const onResize = () => {
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -104,7 +118,13 @@ onMounted(() => {
     1000,
   );
   const p3 = path.getPointAt(0);
-  camera.position.set(p3.x, p3.y, p3.z);
+  gsap.to(camera.position, {
+    x: p3.x,
+    y: p3.y,
+    z: p3.z,
+    duration: 1,
+    ease: "power3",
+  });
   const p2 = path.getPointAt(0.001);
   camera.lookAt(p2);
 
