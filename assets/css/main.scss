@@ -47,29 +47,13 @@ table {
   font-family: NanumSquare;
 }
 
-a {
-  text-decoration: none;
-}
-
 img,
 svg {
   vertical-align: bottom;
 }
 
-
 button {
   cursor: pointer;
   border: none;
-  font-size: 1em;
-}
-
-
-
-.focusFade-enter-active,
-.focusFade-leave-active {
-  transition: opacity 0.3s ease-in-out;
-}
-.focusFade-enter-from,
-.focusFade-leave-to {
-  opacity: 0;
+  font-size: 1rem;
 }
