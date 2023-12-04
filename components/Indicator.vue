@@ -62,6 +62,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+svg {
+  position: fixed;
+  top: -80px;
+  left: -80px;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  pointer-events: none;
+  // 크기 더 작게
+  // 모바일 none
+}
 .cursor {
   position: fixed;
   width: 60px;
@@ -70,6 +79,8 @@ onMounted(() => {
   border: 2px solid #ffffff;
   border-radius: 50%;
   overflow: hidden;
+  pointer-events: none;
+  // 모바일 none
   .wave {
     position: absolute;
     top: 100%;
@@ -98,11 +109,5 @@ onMounted(() => {
       transform: rotate(360deg);
     }
   }
-}
-svg {
-  position: fixed;
-  top: -80px;
-  left: -80px;
-  transform: translate(-50%, -50%) rotate(-90deg);
 }
 </style>

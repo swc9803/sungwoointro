@@ -10,22 +10,21 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
     "@nuxt/types": "^2.17.2",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
-    "@types/node": "^20.8.10",
-    "@typescript-eslint/parser": "^6.9.1",
-    "eslint": "^8.52.0",
-    "eslint-config-prettier": "^9.0.0",
+    "@types/node": "^20.10.3",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "nuxt": "^3.8.0",
-    "prettier": "^3.0.3",
-    "typescript": "^5.2.2",
-    "vue": "^3.3.7",
+    "nuxt": "^3.8.2",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.2",
+    "vue": "^3.3.9",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "gsap": "^3.12.2",
+    "gsap": "^3.12.3",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "three": "^0.158.0"

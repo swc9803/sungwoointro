@@ -1,16 +1,18 @@
 <template>
   <div class="app">
     <Header />
-    <Section1 />
-    <Section2 />
+    <Intro />
+    <Skills />
+    <Projects />
     <Indicator />
   </div>
 </template>
 
 <script setup>
 import Header from "./components/Header.vue";
-import Section1 from "./components/Section1.vue";
-import Section2 from "./components/Section2.vue";
+import Intro from "./components/section/Intro.vue";
+import Skills from "./components/section/Skills.vue";
+import Projects from "./components/section/Projects.vue";
 import Indicator from "./components/Indicator.vue";
 const onResize = () => {
   const vh = window.innerHeight * 0.01;

@@ -9,7 +9,6 @@
 
 <script setup>
 const categories = [
-  { name: "About Me" },
   { name: "Skills" },
   { name: "Projects" },
   { name: "Contact" },
