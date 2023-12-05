@@ -1,241 +1,197 @@
 <template>
-  <div>
-    <canvas ref="canvasRef" @mousemove="onMouseMove" @touchMove="onTouchMove" />
-    <p v-for="item in introText" :key="item.id" :ref="wordRef" class="word">
-      {{ item.text }}
-    </p>
+  <div class="container">
+    <h1 ref="introMessageRef1">Creative</h1>
+    <h1 ref="introMessageRef2">Interactive</h1>
+    <h1 ref="introMessageRef3">Developer</h1>
+    <div ref="canvasRef" class="canvas-wrapper" />
   </div>
 </template>
 
 <script setup>
 import gsap from "gsap";
+import * as THREE from "three";
+import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler.js";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 
-const wordArray = ref([]);
-const wordRef = (el) => wordArray.value.push(el);
-const wordTl = gsap.timeline();
-
-const introText = [
-  { text: "Creative" },
-  { text: "Interactive" },
-  { text: "Web Developer" },
-];
-
+const introMessageRef1 = ref();
+const introMessageRef2 = ref();
+const introMessageRef3 = ref();
 const canvasRef = ref();
+let camera;
+let renderer;
 
-let starCount;
-let ctx;
-const starSize = 2.5;
-const starMinSize = 0.2;
-const overflowThreshold = 20;
-let scale = 1;
-let width, height;
-const stars = [];
-let pointerX, pointerY;
-let touchInput = false;
-const velocity = {
-  x: 0,
-  y: 0,
-  tx: 0,
-  ty: 0,
-  z: 0.001,
-};
+const scene = new THREE.Scene();
 
-const generate = () => {
-  for (let i = 0; i < starCount; i++) {
-    stars.push({
-      x: 0,
-      y: 0,
-      z: starMinSize + Math.random() * (1 - starMinSize),
-    });
+const group = new THREE.Group();
+scene.add(group);
+
+const addSphere = () => {
+  const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+  const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+  for (let z = -1000; z < 1000; z += 5) {
+    const sphere = new THREE.Mesh(geometry, material);
+
+    sphere.position.x = (Math.random() - 0.5) * 1000;
+    sphere.position.y = (Math.random() - 0.5) * 1000;
+    sphere.position.z = z;
+
+    group.add(sphere);
   }
 };
 
-const recycleStar = (star) => {
-  let direction = "z";
-  const vx = Math.abs(velocity.tx);
-  const vy = Math.abs(velocity.ty);
+let sampler;
+const paths = [];
+const loadObj = () => {
+  new OBJLoader().load(
+    "/whale.obj",
+    (obj) => {
+      sampler = new MeshSurfaceSampler(obj.children[0]).build();
 
-  if (vx > 1 && vy > 1) {
-    let axis;
-    if (vx > vy) {
-      axis = Math.random() < Math.abs(velocity.x) / (vx + vy) ? "h" : "v";
-    } else {
-      axis = Math.random() < Math.abs(velocity.y) / (vx + vy) ? "v" : "h";
+      for (let i = 0; i < 4; i++) {
+        const path = new Path(i);
+        paths.push(path);
+        group.add(path.line);
+      }
+    },
+    (xhr) => {
+      if (xhr.loaded === xhr.total) {
+        onResize();
+        gsap.from(
+          [
+            introMessageRef1.value,
+            introMessageRef2.value,
+            introMessageRef3.value,
+          ],
+          {
+            opacity: 0,
+            filter: "blur(2em)",
+            stagger: 0.3,
+            duration: 2,
+          },
+        );
+      }
+    },
+  );
+};
+
+const tempPosition = new THREE.Vector3();
+const materials = [
+  new THREE.LineBasicMaterial({
+    color: 0xd7e0ff,
+    transparent: true,
+    opacity: 0.5,
+  }),
+  new THREE.LineBasicMaterial({
+    color: 0xe2e9ff,
+    transparent: true,
+    opacity: 0.5,
+  }),
+  new THREE.LineBasicMaterial({
+    color: 0xa5b9ff,
+    transparent: true,
+    opacity: 0.5,
+  }),
+  new THREE.LineBasicMaterial({
+    color: 0xb0c2ff,
+    transparent: true,
+    opacity: 0.5,
+  }),
+];
+class Path {
+  constructor(index) {
+    this.geometry = new THREE.BufferGeometry();
+    this.material = materials[index % 4];
+    this.line = new THREE.Line(this.geometry, this.material);
+    this.vertices = [];
+
+    sampler.sample(tempPosition);
+    this.previousPoint = tempPosition.clone();
+  }
+
+  update() {
+    let pointFound = false;
+    while (!pointFound) {
+      sampler.sample(tempPosition);
+      if (tempPosition.distanceTo(this.previousPoint) < 1.5) {
+        this.vertices.push(tempPosition.x, tempPosition.y, tempPosition.z);
+        this.previousPoint = tempPosition.clone();
+        pointFound = true;
+      }
     }
-
-    if (axis === "h") {
-      direction = velocity.x > 0 ? "l" : "r";
-    } else {
-      direction = velocity.y > 0 ? "t" : "b";
-    }
+    this.geometry.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(this.vertices, 3),
+    );
   }
-  star.z = starMinSize + Math.random() * (1 - starMinSize);
-
-  if (direction === "z") {
-    star.z = 0.1;
-    star.x = Math.random() * width;
-    star.y = Math.random() * height;
-  } else if (direction === "l") {
-    star.x = -starSize;
-    star.y = height * Math.random();
-  } else if (direction === "r") {
-    star.x = width + starSize;
-    star.y = height * Math.random();
-  } else if (direction === "t") {
-    star.x = width * Math.random();
-    star.y = -starSize;
-  } else if (direction === "b") {
-    star.x = width * Math.random();
-    star.y = height + starSize;
-  }
-};
-
-const movePointer = (x, y) => {
-  if (typeof pointerX === "number" && typeof pointerY === "number") {
-    const ox = x - pointerX;
-    const oy = y - pointerY;
-    velocity.tx = velocity.x + (ox / 8) * scale * (touchInput ? -1 : 1);
-    velocity.ty = velocity.y + (oy / 8) * scale * (touchInput ? -1 : 1);
-  }
-  pointerX = x;
-  pointerY = y;
-};
-
-const onMouseMove = (e) => {
-  touchInput = false;
-  movePointer(e.pageX / 5, e.pageY / 5);
-};
-const onTouchMove = (e) => {
-  touchInput = true;
-  movePointer(e.touches[0].pageX / 5, e.touches[0].pageY / 5, true);
-  e.preventDefault();
-};
-
-const placeStar = (star) => {
-  star.x = Math.random() * width;
-  star.y = Math.random() * height;
-};
-
-const onResize = () => {
-  scale = devicePixelRatio || 1;
-  width = window.innerWidth * scale;
-  height = window.innerHeight * scale;
-  canvasRef.value.width = width;
-  canvasRef.value.height = height;
-  stars.forEach(placeStar);
-};
-
-const update = () => {
-  velocity.tx *= 0.8;
-  velocity.ty *= 0.8;
-  velocity.x += (velocity.tx - velocity.x) * 0.4;
-  velocity.y += (velocity.ty - velocity.y) * 0.4;
-
-  stars.forEach((star) => {
-    star.x += velocity.x * star.z;
-    star.y += velocity.y * star.z;
-    star.x += (star.x - width / 2) * velocity.z * star.z;
-    star.y += (star.y - height / 2) * velocity.z * star.z;
-    star.z += velocity.z;
-
-    if (
-      star.x < -overflowThreshold ||
-      star.x > width + overflowThreshold ||
-      star.y < -overflowThreshold ||
-      star.y > height + overflowThreshold
-    ) {
-      recycleStar(star);
-    }
-  });
-};
-
-const render = () => {
-  stars.forEach((star) => {
-    ctx.beginPath();
-    ctx.lineCap = "round";
-    ctx.lineWidth = starSize * star.z * scale;
-    ctx.strokeStyle = `rgba(255, 255, 255, ${0.7 + 0.7 * Math.random()}`;
-    ctx.beginPath();
-    ctx.moveTo(star.x, star.y);
-
-    const tailX = Math.abs(velocity.x * 3) < 0.1 ? 0.4 : velocity.x * 3;
-    const tailY = Math.abs(velocity.y * 3) < 0.1 ? 0.4 : velocity.y * 3;
-
-    ctx.lineTo(star.x + tailX, star.y + tailY);
-    ctx.stroke();
-  });
-};
+}
 
 const animate = () => {
-  ctx.clearRect(0, 0, width, height);
+  group.rotation.y += 0.0005;
 
-  update();
-  render();
+  paths.forEach((path) => {
+    if (path.vertices.length < 10000) {
+      path.update();
+    }
+  });
+
+  renderer.render(scene, camera);
   requestAnimationFrame(animate);
 };
 
+const onResize = () => {
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(canvasRef.value.offsetWidth, canvasRef.value.offsetHeight);
+  canvasRef.value.appendChild(renderer.domElement);
+  camera.aspect = canvasRef.value.offsetWidth / canvasRef.value.offsetHeight;
+  camera.updateProjectionMatrix();
+};
+
 onMounted(() => {
-  starCount = (window.innerWidth + window.innerHeight) * 0.2;
-  ctx = canvasRef.value.getContext("2d");
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  camera = new THREE.PerspectiveCamera(
+    75,
+    canvasRef.value.offsetWidth / canvasRef.value.offsetHeight,
+    0.1,
+    1000,
+  );
+  camera.position.z = 30;
 
-  generate();
-  onResize();
   animate();
-
-  wordTl.from(wordArray.value[0], {
-    filter: "blur(1em)",
-    opacity: 0,
-    duration: 1,
-  });
-  wordTl.to(wordArray.value[0], {
-    y: "-50vh",
-    duration: 1,
-    ease: "power3.in",
-  });
-  wordTl.from(wordArray.value[1], {
-    filter: "blur(1em)",
-    opacity: 0,
-    duration: 1,
-  });
-  wordTl.to(wordArray.value[1], {
-    y: "-50vh",
-    duration: 1,
-    ease: "power3.in",
-  });
-  wordTl.from(wordArray.value[2], {
-    filter: "blur(1em)",
-    opacity: 0,
-    duration: 1,
-  });
-  wordTl.to(wordArray.value[2], {
-    y: "-50vh",
-    duration: 1,
-    ease: "power3.in",
-  });
+  loadObj();
+  addSphere();
 
   window.addEventListener("resize", onResize);
 });
 </script>
 
 <style lang="scss" scoped>
-div {
+.container {
   position: relative;
   width: 100%;
   height: calc(var(--vh) * 100);
-  background: #222222;
-  canvas {
+  background: #111111;
+  .canvas-wrapper {
     position: absolute;
+    top: 0;
     width: 100%;
     height: 100%;
   }
-  .word {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
-    color: #ffffff;
-    font-size: 5vw;
-    font-weight: 900;
+  h1 {
+    position: relative;
+    top: 65%;
+    transform: translate3d(0, -50%, 0);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10px;
+    width: 100%;
+    color: white;
+    font-size: 3em;
+    // letter-spacing:;
+    // filter: blur(2em);
+    // opacity: 0;
+    z-index: 1;
   }
 }
 </style>
