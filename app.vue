@@ -4,6 +4,7 @@
     <Intro />
     <Skills />
     <Projects />
+    <Information />
     <Indicator />
   </div>
 </template>
@@ -13,6 +14,7 @@ import Header from "./components/Header.vue";
 import Intro from "./components/section/Intro.vue";
 import Skills from "./components/section/Skills.vue";
 import Projects from "./components/section/Projects.vue";
+import Information from "./components/section/Information.vue";
 import Indicator from "./components/Indicator.vue";
 const onResize = () => {
   const vh = window.innerHeight * 0.01;
