@@ -25,16 +25,17 @@ const scene = new THREE.Scene();
 const group = new THREE.Group();
 scene.add(group);
 
-const addSphere = () => {
+const addStar = () => {
   const geometry = new THREE.SphereGeometry(0.5, 32, 32);
   const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
-  for (let z = -1000; z < 1000; z += 5) {
+  for (let z = -1000; z < 1000; z += 1) {
     const sphere = new THREE.Mesh(geometry, material);
 
     sphere.position.x = (Math.random() - 0.5) * 1000;
     sphere.position.y = (Math.random() - 0.5) * 1000;
     sphere.position.z = z;
+    sphere.scale.set(0.7, 0.7, 0.7);
 
     group.add(sphere);
   }
@@ -159,7 +160,7 @@ onMounted(() => {
 
   animate();
   loadObj();
-  addSphere();
+  addStar();
 
   window.addEventListener("resize", onResize);
 });
@@ -189,8 +190,6 @@ onMounted(() => {
     color: white;
     font-size: 3em;
     // letter-spacing:;
-    // filter: blur(2em);
-    // opacity: 0;
     z-index: 1;
   }
 }
