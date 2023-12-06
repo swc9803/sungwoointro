@@ -2,6 +2,4 @@
 
 <!-- 인트로 delta time -->
 
-<!-- Skills flip -->
-
 <!-- resize 전체화면 오류 -->
