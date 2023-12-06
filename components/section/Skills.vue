@@ -1,6 +1,11 @@
 <template>
   <div class="logo-container">
-    <div v-for="item in skills" :key="item.id" class="logo-wrapper">
+    <div
+      v-for="item in skills"
+      :ref="skillRef"
+      :key="item.id"
+      class="logo-wrapper"
+    >
       <img :src="item.src" :alt="item.src" />
     </div>
   </div>
@@ -8,6 +13,7 @@
 </template>
 
 <script setup>
+import gsap from "gsap";
 import VueLogo from "@/assets/img/logo/vue-logo.webp";
 import TypescriptLogo from "@/assets/img/logo/ts-logo.webp";
 import ReactLogo from "@/assets/img/logo/react-logo.webp";
@@ -35,18 +41,39 @@ const skills = [
   { name: "Figma", src: FigmaLogo },
   { name: "Blender", src: BlenderLogo },
 ];
+
+const skillArray = ref([]);
+const skillRef = (el) => skillArray.value.push(el);
+
+onMounted(() => {
+  gsap.from(skillArray.value, {
+    opacity: 0,
+    scale: 0,
+    stagger: 0.3,
+  });
+});
 </script>
 
 <style lang="scss" scoped>
+$colors: #c8ffcd, #c2e6ff, #bffff4, #ffd9d2, #ffe3fc, #feffd0, #f7ffc7, #ffffff,
+  #bfffcd, #ffdfcd, #f6f6f6, #ffe5bf;
+
 .logo-container {
   display: grid;
   justify-content: space-around;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  background: black;
   .logo-wrapper {
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    transition: filter 0.5s;
+    @for $i from 1 through length($colors) {
+      &:nth-child(#{$i}):hover {
+        filter: drop-shadow(0 0 1em nth($colors, $i));
+      }
+    }
     img {
       width: 100%;
     }
