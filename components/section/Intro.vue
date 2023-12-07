@@ -137,16 +137,28 @@ class Path {
   }
 }
 
-const animate = () => {
-  group.rotation.y += 0.0005;
+let lastTime = null;
 
-  paths.forEach((path) => {
-    if (path.vertices.length < 10000) {
-      path.update();
-    }
-  });
+const animate = (time) => {
+  if (!lastTime) {
+    lastTime = time;
+  }
 
-  renderer.render(scene, camera);
+  const deltaTime = time - lastTime;
+
+  if (deltaTime > 10) {
+    group.rotation.y += 0.001;
+
+    paths.forEach((path) => {
+      if (path.vertices.length < 10000) {
+        path.update();
+      }
+    });
+
+    renderer.render(scene, camera);
+    lastTime = time;
+  }
+
   requestAnimationFrame(animate);
 };
 
