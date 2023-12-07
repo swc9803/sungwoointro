@@ -229,8 +229,8 @@ const animate = (time) => {
 
   const deltaTime = time - lastTime;
 
-  if (deltaTime > 10) {
-    group.rotation.y += 0.001;
+  if (deltaTime > 16) {
+    group.rotation.y += 0.002;
 
     paths.forEach((path) => {
       if (path.vertices.length < 10000) {
@@ -246,11 +246,13 @@ const animate = (time) => {
 };
 
 const onResize = () => {
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(canvasRef.value.offsetWidth, canvasRef.value.offsetHeight);
-  canvasRef.value.appendChild(renderer.domElement);
-  camera.aspect = canvasRef.value.offsetWidth / canvasRef.value.offsetHeight;
-  camera.updateProjectionMatrix();
+  setTimeout(() => {
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(canvasRef.value.offsetWidth, canvasRef.value.offsetHeight);
+    canvasRef.value.appendChild(renderer.domElement);
+    camera.aspect = canvasRef.value.offsetWidth / canvasRef.value.offsetHeight;
+    camera.updateProjectionMatrix();
+  }, 50);
 };
 
 onMounted(() => {
