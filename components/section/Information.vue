@@ -1,11 +1,43 @@
 <template>
-  <div>
-    <p>github</p>
-    <p>codepen</p>
-    <p>intro</p>
+  <div class="container">
+    <div @click="goToGit">
+      <Github />
+      <p>Github</p>
+    </div>
+    <div @click="goToCodepen">
+      <Codepen />
+      <p>Codepen</p>
+    </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import Github from "@/assets/svg/infoGithub.vue";
+import Codepen from "@/assets/svg/infoCodepen.vue";
 
-<style lang="scss" scoped></style>
+const goToGit = () => {
+  open("https://github.com/swc9803");
+};
+const goToCodepen = () => {
+  open("https://codepen.io/swc9803/pens/public");
+};
+</script>
+
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 50px 0;
+  color: white;
+  background: #222222;
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p {
+      margin-top: 10px;
+    }
+  }
+}
+</style>
