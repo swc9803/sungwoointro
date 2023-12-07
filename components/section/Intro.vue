@@ -1,8 +1,10 @@
 <template>
   <div class="container">
-    <h1 ref="introMessageRef1">Creative</h1>
-    <h1 ref="introMessageRef2">Interactive</h1>
-    <h1 ref="introMessageRef3">Developer</h1>
+    <div class="svg-wrapper">
+      <IntroText1 ref="introTextRef1" />
+      <IntroText2 ref="introTextRef2" />
+      <IntroText3 ref="introTextRef3" />
+    </div>
     <div ref="canvasRef" class="canvas-wrapper" />
   </div>
 </template>
@@ -12,10 +14,14 @@ import gsap from "gsap";
 import * as THREE from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler.js";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
+import IntroText1 from "~/assets/svg/IntroText1.vue";
+import IntroText2 from "~/assets/svg/IntroText2.vue";
+import IntroText3 from "~/assets/svg/IntroText3.vue";
 
-const introMessageRef1 = ref();
-const introMessageRef2 = ref();
-const introMessageRef3 = ref();
+const introTextRef1 = ref();
+const introTextRef2 = ref();
+const introTextRef3 = ref();
+
 const canvasRef = ref();
 let camera;
 let renderer;
@@ -58,29 +64,106 @@ const loadObj = () => {
     (xhr) => {
       if (xhr.loaded === xhr.total) {
         onResize();
-        gsap.set(
-          [
-            introMessageRef1.value,
-            introMessageRef2.value,
-            introMessageRef3.value,
-          ],
-          {
-            opacity: 1,
-          },
+
+        const paths1 = [
+          introTextRef1.value.path11,
+          introTextRef1.value.path10,
+          introTextRef1.value.path9,
+          introTextRef1.value.path8,
+          introTextRef1.value.path7,
+          introTextRef1.value.path6,
+          introTextRef1.value.path5,
+          introTextRef1.value.path4,
+          introTextRef1.value.path3,
+          introTextRef1.value.path2,
+          introTextRef1.value.path1,
+        ];
+        const pathLengths1 = Array.from(paths1, (path) =>
+          path.getTotalLength(),
         );
-        gsap.from(
-          [
-            introMessageRef1.value,
-            introMessageRef2.value,
-            introMessageRef3.value,
-          ],
-          {
-            opacity: 0,
-            filter: "blur(2em)",
-            stagger: 0.3,
-            duration: 2,
-          },
+        paths1.forEach((path, index) => {
+          path.style.strokeDasharray = pathLengths1[index];
+          path.style.strokeDashoffset = pathLengths1[index];
+          gsap.fromTo(
+            path,
+            {
+              strokeDashoffset: pathLengths1[index],
+            },
+            {
+              strokeDashoffset: 0,
+              duration: 0.5,
+              delay: index * 0.3,
+              ease: "power2.inOut",
+            },
+          );
+        });
+
+        const paths2 = [
+          introTextRef2.value.path8,
+          introTextRef2.value.path7,
+          introTextRef2.value.path4,
+          introTextRef2.value.path6,
+          introTextRef2.value.path5,
+          introTextRef2.value.path3,
+          introTextRef2.value.path2,
+          introTextRef2.value.path1,
+        ];
+        const pathLengths2 = Array.from(paths2, (path) =>
+          path.getTotalLength(),
         );
+        paths2.forEach((path, index) => {
+          path.style.strokeDasharray = pathLengths2[index];
+          path.style.strokeDashoffset = pathLengths2[index];
+          gsap.fromTo(
+            path,
+            {
+              strokeDashoffset: pathLengths2[index],
+            },
+            {
+              strokeDashoffset: 0,
+              duration: 0.5,
+              delay: index * 0.3,
+              ease: "power2.inOut",
+            },
+          );
+        });
+
+        const paths3 = [
+          introTextRef3.value.path9,
+          introTextRef3.value.path8,
+          introTextRef3.value.path7,
+          introTextRef3.value.path6,
+          introTextRef3.value.path5,
+          introTextRef3.value.path4,
+          introTextRef3.value.path3,
+          introTextRef3.value.path2,
+          introTextRef3.value.path1,
+        ];
+        const pathLengths3 = Array.from(paths3, (path) =>
+          path.getTotalLength(),
+        );
+        paths3.forEach((path, index) => {
+          path.style.strokeDasharray = pathLengths3[index];
+          path.style.strokeDashoffset = pathLengths3[index];
+          gsap.fromTo(
+            path,
+            {
+              strokeDashoffset: pathLengths3[index],
+            },
+            {
+              strokeDashoffset: 0,
+              duration: 0.5,
+              delay: index * 0.3,
+              ease: "power2.inOut",
+            },
+          );
+        });
+
+        gsap.to([paths1, paths2, paths3], {
+          fill: "#ffffff",
+          duration: 0.5,
+          delay: 3.5,
+        });
       }
     },
   );
@@ -194,26 +277,32 @@ onMounted(() => {
   width: 100%;
   height: calc(var(--vh) * 100);
   background: #111111;
+  .svg-wrapper {
+    position: relative;
+    top: 70%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    svg {
+      @media (max-width: 1240px) {
+        scale: 0.8;
+      }
+      @media (max-width: 768px) {
+        scale: 0.7;
+      }
+      @media (max-width: 480px) {
+        scale: 0.5;
+      }
+    }
+  }
   .canvas-wrapper {
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
-  }
-  h1 {
-    position: relative;
-    top: 65%;
-    transform: translate3d(0, -50%, 0);
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 10px;
-    width: 100%;
-    color: white;
-    font-size: 3em;
-    opacity: 0;
-    // letter-spacing:;
-    z-index: 1;
   }
 }
 </style>
