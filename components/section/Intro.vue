@@ -50,123 +50,110 @@ const addStar = () => {
 let sampler;
 const paths = [];
 const loadObj = () => {
-  new OBJLoader().load(
-    "/whale.obj",
-    (obj) => {
-      sampler = new MeshSurfaceSampler(obj.children[0]).build();
+  new OBJLoader().load("/whale.obj", (obj) => {
+    sampler = new MeshSurfaceSampler(obj.children[0]).build();
 
-      for (let i = 0; i < 4; i++) {
-        const path = new Path(i);
-        paths.push(path);
-        group.add(path.line);
-      }
-    },
-    (xhr) => {
-      if (xhr.loaded === xhr.total) {
-        onResize();
+    for (let i = 0; i < 4; i++) {
+      const path = new Path(i);
+      paths.push(path);
+      group.add(path.line);
+    }
+    onResize();
 
-        const paths1 = [
-          introTextRef1.value.path11,
-          introTextRef1.value.path10,
-          introTextRef1.value.path9,
-          introTextRef1.value.path8,
-          introTextRef1.value.path7,
-          introTextRef1.value.path6,
-          introTextRef1.value.path5,
-          introTextRef1.value.path4,
-          introTextRef1.value.path3,
-          introTextRef1.value.path2,
-          introTextRef1.value.path1,
-        ];
-        const pathLengths1 = Array.from(paths1, (path) =>
-          path.getTotalLength(),
-        );
-        paths1.forEach((path, index) => {
-          path.style.strokeDasharray = pathLengths1[index];
-          path.style.strokeDashoffset = pathLengths1[index];
-          gsap.fromTo(
-            path,
-            {
-              strokeDashoffset: pathLengths1[index],
-            },
-            {
-              strokeDashoffset: 0,
-              duration: 0.5,
-              delay: index * 0.3,
-              ease: "power2.inOut",
-            },
-          );
-        });
-
-        const paths2 = [
-          introTextRef2.value.path8,
-          introTextRef2.value.path7,
-          introTextRef2.value.path4,
-          introTextRef2.value.path6,
-          introTextRef2.value.path5,
-          introTextRef2.value.path3,
-          introTextRef2.value.path2,
-          introTextRef2.value.path1,
-        ];
-        const pathLengths2 = Array.from(paths2, (path) =>
-          path.getTotalLength(),
-        );
-        paths2.forEach((path, index) => {
-          path.style.strokeDasharray = pathLengths2[index];
-          path.style.strokeDashoffset = pathLengths2[index];
-          gsap.fromTo(
-            path,
-            {
-              strokeDashoffset: pathLengths2[index],
-            },
-            {
-              strokeDashoffset: 0,
-              duration: 0.5,
-              delay: index * 0.3,
-              ease: "power2.inOut",
-            },
-          );
-        });
-
-        const paths3 = [
-          introTextRef3.value.path9,
-          introTextRef3.value.path8,
-          introTextRef3.value.path7,
-          introTextRef3.value.path6,
-          introTextRef3.value.path5,
-          introTextRef3.value.path4,
-          introTextRef3.value.path3,
-          introTextRef3.value.path2,
-          introTextRef3.value.path1,
-        ];
-        const pathLengths3 = Array.from(paths3, (path) =>
-          path.getTotalLength(),
-        );
-        paths3.forEach((path, index) => {
-          path.style.strokeDasharray = pathLengths3[index];
-          path.style.strokeDashoffset = pathLengths3[index];
-          gsap.fromTo(
-            path,
-            {
-              strokeDashoffset: pathLengths3[index],
-            },
-            {
-              strokeDashoffset: 0,
-              duration: 0.5,
-              delay: index * 0.3,
-              ease: "power2.inOut",
-            },
-          );
-        });
-
-        gsap.to([paths1, paths2, paths3], {
-          fill: "#ffffff",
+    const paths1 = [
+      introTextRef1.value.path11,
+      introTextRef1.value.path10,
+      introTextRef1.value.path9,
+      introTextRef1.value.path8,
+      introTextRef1.value.path7,
+      introTextRef1.value.path6,
+      introTextRef1.value.path5,
+      introTextRef1.value.path4,
+      introTextRef1.value.path3,
+      introTextRef1.value.path2,
+      introTextRef1.value.path1,
+    ];
+    const pathLengths1 = Array.from(paths1, (path) => path.getTotalLength());
+    paths1.forEach((path, index) => {
+      path.style.strokeDasharray = pathLengths1[index];
+      path.style.strokeDashoffset = pathLengths1[index];
+      gsap.fromTo(
+        path,
+        {
+          strokeDashoffset: pathLengths1[index],
+        },
+        {
+          strokeDashoffset: 0,
           duration: 0.5,
-          delay: 3.5,
-        });
-      }
-    },
-  );
+          delay: index * 0.3,
+          ease: "power2.inOut",
+        },
+      );
+    });
+
+    const paths2 = [
+      introTextRef2.value.path8,
+      introTextRef2.value.path7,
+      introTextRef2.value.path4,
+      introTextRef2.value.path6,
+      introTextRef2.value.path5,
+      introTextRef2.value.path3,
+      introTextRef2.value.path2,
+      introTextRef2.value.path1,
+    ];
+    const pathLengths2 = Array.from(paths2, (path) => path.getTotalLength());
+    paths2.forEach((path, index) => {
+      path.style.strokeDasharray = pathLengths2[index];
+      path.style.strokeDashoffset = pathLengths2[index];
+      gsap.fromTo(
+        path,
+        {
+          strokeDashoffset: pathLengths2[index],
+        },
+        {
+          strokeDashoffset: 0,
+          duration: 0.5,
+          delay: index * 0.3,
+          ease: "power2.inOut",
+        },
+      );
+    });
+
+    const paths3 = [
+      introTextRef3.value.path9,
+      introTextRef3.value.path8,
+      introTextRef3.value.path7,
+      introTextRef3.value.path6,
+      introTextRef3.value.path5,
+      introTextRef3.value.path4,
+      introTextRef3.value.path3,
+      introTextRef3.value.path2,
+      introTextRef3.value.path1,
+    ];
+    const pathLengths3 = Array.from(paths3, (path) => path.getTotalLength());
+    paths3.forEach((path, index) => {
+      path.style.strokeDasharray = pathLengths3[index];
+      path.style.strokeDashoffset = pathLengths3[index];
+      gsap.fromTo(
+        path,
+        {
+          strokeDashoffset: pathLengths3[index],
+        },
+        {
+          strokeDashoffset: 0,
+          duration: 0.5,
+          delay: index * 0.3,
+          ease: "power2.inOut",
+        },
+      );
+    });
+
+    gsap.to([paths1, paths2, paths3], {
+      fill: "#ffffff",
+      duration: 0.5,
+      delay: 3.5,
+    });
+  });
 };
 
 const tempPosition = new THREE.Vector3();
@@ -265,6 +252,7 @@ onMounted(() => {
   );
   camera.position.z = 30;
 
+  onResize();
   animate();
   loadObj();
   addStar();
