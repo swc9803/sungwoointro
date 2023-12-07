@@ -58,6 +58,16 @@ const loadObj = () => {
     (xhr) => {
       if (xhr.loaded === xhr.total) {
         onResize();
+        gsap.set(
+          [
+            introMessageRef1.value,
+            introMessageRef2.value,
+            introMessageRef3.value,
+          ],
+          {
+            opacity: 1,
+          },
+        );
         gsap.from(
           [
             introMessageRef1.value,
@@ -189,6 +199,7 @@ onMounted(() => {
     width: 100%;
     color: white;
     font-size: 3em;
+    opacity: 0;
     // letter-spacing:;
     z-index: 1;
   }
