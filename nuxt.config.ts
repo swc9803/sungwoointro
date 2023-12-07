@@ -1,4 +1,4 @@
 export default defineNuxtConfig({
   ssr: false,
-  css: ["~/assets/css/main.scss"],
+  css: ["~/assets/css/main.scss", "~/assets/css/swiper.scss"],
 });
