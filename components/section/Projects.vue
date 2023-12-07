@@ -1,12 +1,21 @@
 <template>
-  <div class="container">
-    <h1>Projects</h1>
+  <div ref="containerRef" class="container">
+    <div class="project-text-wrapper">
+      <h1 ref="text1">P</h1>
+      <h1 ref="text2">R</h1>
+      <h1 ref="text3">O</h1>
+      <h1 ref="text4">J</h1>
+      <h1 ref="text5">E</h1>
+      <h1 ref="text6">C</h1>
+      <h1 ref="text7">T</h1>
+      <h1 ref="text8">S</h1>
+    </div>
     <div class="projects-container">
       <div v-for="item in projects" :key="item.id" class="projects-wrapper">
         <p class="title">{{ item.title }}</p>
         <div class="project-flex">
           <div class="img-wrapper">
-            <img :src="item.src" :alt="item.title" />
+            <img :src="item.src" :alt="item.title" @load="onLoad" />
           </div>
           <div class="text-wrapper">
             <p class="sub-title">{{ item.subTitle }}</p>
@@ -24,6 +33,9 @@
 </template>
 
 <script setup>
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import Tommy from "@/assets/img/projects/amazing.webp";
 import Lotteria from "@/assets/img/projects/lotteria.webp";
 import Wemix from "@/assets/img/projects/wemix.webp";
@@ -33,6 +45,19 @@ import Old from "@/assets/img/projects/old.webp";
 import Home from "@/assets/svg/home.vue";
 import Github from "@/assets/svg/github.vue";
 import Screen from "@/assets/svg/screen.vue";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const containerRef = ref();
+
+const text1 = ref();
+const text2 = ref();
+const text3 = ref();
+const text4 = ref();
+const text5 = ref();
+const text6 = ref();
+const text7 = ref();
+const text8 = ref();
 
 const projects = [
   {
@@ -139,18 +164,53 @@ const projects = [
 const goToPath = (path) => {
   open(path);
 };
+
+const onLoad = () => {
+  ScrollTrigger.refresh();
+};
+
+onMounted(() => {
+  gsap.from(
+    [
+      text1.value,
+      text2.value,
+      text3.value,
+      text4.value,
+      text5.value,
+      text6.value,
+      text7.value,
+      text8.value,
+    ],
+    {
+      scrollTrigger: {
+        trigger: containerRef.value,
+        start: "start 60%",
+      },
+      opacity: 0,
+      y: -100,
+      stagger: 0.1,
+      duration: 1,
+      ease: "bounce",
+    },
+  );
+});
 </script>
 
 <style lang="scss" scoped>
 .container {
-  background: black;
+  padding: 60px 0;
+  background: rgb(0, 112, 0);
   @media (max-width: 1240px) {
-    padding: 20px 20px;
+    padding: 60px 20px;
   }
-  h1 {
-    text-align: center;
-    margin-bottom: 50px;
-    color: white;
+  .project-text-wrapper {
+    display: flex;
+    justify-content: center;
+    h1 {
+      margin-bottom: 50px;
+      color: white;
+      font-weight: 900;
+    }
   }
   .projects-container {
     display: flex;
@@ -159,8 +219,9 @@ const goToPath = (path) => {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
+    border: 5px solid yellow;
     border-radius: 1em;
-    background: rgb(240, 240, 240);
+    background: rgb(255, 209, 209);
     .projects-wrapper {
       margin: 40px;
       padding: 20px;
@@ -195,7 +256,7 @@ const goToPath = (path) => {
             word-break: keep-all;
           }
           .description {
-            margin-bottom: 40px;
+            margin-bottom: 120px;
             word-break: keep-all;
             white-space: pre-line;
             line-height: 1.6em;

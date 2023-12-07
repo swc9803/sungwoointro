@@ -1,7 +1,14 @@
 <template>
-  <div class="container">
-    <h1>Skills</h1>
-    <div ref="containerRef" class="logo-container">
+  <div ref="containerRef" class="container">
+    <div class="text-wrapper">
+      <h1 ref="text1">S</h1>
+      <h1 ref="text2">K</h1>
+      <h1 ref="text3">I</h1>
+      <h1 ref="text4">L</h1>
+      <h1 ref="text5">L</h1>
+      <h1 ref="text6">S</h1>
+    </div>
+    <div class="logo-container">
       <div
         v-for="item in skills"
         :ref="skillRef"
@@ -34,6 +41,13 @@ import BlenderLogo from "@/assets/img/skills/blender-logo.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const text1 = ref();
+const text2 = ref();
+const text3 = ref();
+const text4 = ref();
+const text5 = ref();
+const text6 = ref();
+
 const skills = [
   { name: "Vue/Nuxt", src: VueLogo },
   { name: "Typescript", src: TypescriptLogo },
@@ -58,19 +72,45 @@ const loadedImgCount = ref(0);
 const onLoad = () => {
   loadedImgCount.value++;
   if (loadedImgCount.value > 11) {
-    gsap.from(skillArray.value, {
-      scrollTrigger: {
-        trigger: containerRef.value,
-        start: "start 60%",
+    gsap.from(
+      [
+        text1.value,
+        text2.value,
+        text3.value,
+        text4.value,
+        text5.value,
+        text6.value,
+      ],
+      {
+        scrollTrigger: {
+          trigger: containerRef.value,
+          start: "start 60%",
+        },
+        opacity: 0,
+        y: -100,
+        stagger: 0.1,
+        duration: 1,
+        ease: "bounce",
+        onComplete: () => {
+          gsap.to(skillArray.value, {
+            opacity: 1,
+            scale: 1,
+            ease: "back",
+            stagger: 0.1,
+            duration: 1.2,
+          });
+        },
       },
-      opacity: 0,
-      scale: 0,
-      ease: "back",
-      stagger: 0.1,
-      duration: 1.2,
-    });
+    );
   }
 };
+
+onMounted(() => {
+  gsap.set(skillArray.value, {
+    opacity: 0,
+    scale: 0,
+  });
+});
 </script>
 
 <style lang="scss" scoped>
@@ -78,15 +118,19 @@ $colors: #c8ffcd, #c2e6ff, #bffff4, #ffd9d2, #ffe3fc, #feffd0, #f7ffc7, #ffffff,
   #bfffcd, #ffdfcd, #f6f6f6, #ffe5bf;
 
 .container {
-  padding: 20px 0;
-  background: #111111;
+  padding: 60px 0;
+  background: rgb(0, 130, 170);
   @media (max-width: 1240px) {
-    padding: 20px 20px;
+    padding: 60px 20px;
   }
-  h1 {
-    text-align: center;
-    margin-bottom: 50px;
-    color: white;
+  .text-wrapper {
+    display: flex;
+    justify-content: center;
+    h1 {
+      margin-bottom: 50px;
+      color: white;
+      font-weight: 900;
+    }
   }
   .logo-container {
     display: grid;
