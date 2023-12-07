@@ -144,9 +144,9 @@ const projects = [
       { skill: "Firebase" },
     ],
     site: true,
-    git: true,
+    github: true,
     path: "",
-    pathGit: "",
+    pathGit: "https://github.com/swc9803/intro-fish",
   },
   {
     title: "Wemix3.0 Linked with Screen Site",
@@ -180,7 +180,7 @@ const projects = [
       { skill: "Firebase" },
     ],
     site: true,
-    git: true,
+    github: true,
     path: "https://sung-gallery.firebaseapp.com",
     pathGit: "https://github.com/swc9803/gallery",
   },
@@ -206,7 +206,9 @@ const projects = [
       "초기 화면을 Canvas를 활용하여 인터랙션 효과를 적용하고, 간단한 자기 소개를 표현했습니다. 그러나 코드를 다시 살펴보니 컴포넌트화가 제대로 이루어지지 않았고, 스타일 가이드도 일관성이 부족했습니다. 이러한 부분을 보완하기 위해 정확한 스타일 가이드를 참고하여 프로젝트를 재구성하고, 컴포넌트의 재사용성을 높이기 위해 노력했습니다.",
     skills: [{ skill: "Vue" }, { skill: "Gsap" }, { skill: "Firebase" }],
     site: true,
+    github: true,
     path: "https://newsungpf.firebaseapp.com",
+    pathGit: "https://github.com/swc9803/newportfolio",
   },
 ];
 
@@ -262,12 +264,12 @@ onMounted(() => {
       },
       opacity: 0,
       x: 60,
-      duration: 1,
+      duration: 0.5,
       onStart: () => {
         gsap.to(img, {
           opacity: 1,
           x: 0,
-          duration: 1,
+          duration: 0.5,
         });
       },
     });
@@ -301,6 +303,9 @@ onMounted(() => {
     border: 5px solid yellow;
     border-radius: 1em;
     background: rgb(255, 209, 209);
+    @media (max-width: 768px) {
+      gap: 20px;
+    }
     .projects-wrapper {
       margin: 40px;
       padding: 20px;

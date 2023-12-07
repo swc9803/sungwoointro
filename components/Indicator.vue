@@ -72,11 +72,8 @@ onMounted(() => {
     top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
-    // bottom: 2vw;
-    // right: 2vw;
     width: 60px;
     height: 60px;
-    // transform: translate3d(-50%, -50%, 0);
     border: 2px solid #ffffff;
     border-radius: 50%;
     overflow: hidden;
