@@ -118,7 +118,7 @@ $colors: #c8ffcd, #c2e6ff, #bffff4, #ffd9d2, #ffe3fc, #feffd0, #f7ffc7, #ffffff,
   #bfffcd, #ffdfcd, #f6f6f6, #ffe5bf;
 
 .container {
-  padding: 60px 0;
+  padding: 60px 0 100px 0;
   background: rgb(0, 130, 170);
   @media (max-width: 1240px) {
     padding: 60px 20px;
@@ -126,8 +126,8 @@ $colors: #c8ffcd, #c2e6ff, #bffff4, #ffd9d2, #ffe3fc, #feffd0, #f7ffc7, #ffffff,
   .text-wrapper {
     display: flex;
     justify-content: center;
+    margin-bottom: 80px;
     h1 {
-      margin-bottom: 50px;
       color: white;
       font-weight: 900;
     }
@@ -136,10 +136,19 @@ $colors: #c8ffcd, #c2e6ff, #bffff4, #ffd9d2, #ffe3fc, #feffd0, #f7ffc7, #ffffff,
     display: grid;
     justify-content: space-around;
     grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
+    gap: 40px;
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
+    @media (max-width: 1240px) {
+      grid-template-columns: repeat(3, 1fr);
+      width: 60%;
+    }
+    @media (max-width: 480px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      width: 60%;
+    }
     .logo-wrapper {
       position: relative;
       border-radius: 50%;
@@ -166,7 +175,7 @@ $colors: #c8ffcd, #c2e6ff, #bffff4, #ffd9d2, #ffe3fc, #feffd0, #f7ffc7, #ffffff,
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
         color: white;
-        font-size: 1.5em;
+        font-size: 1.25em;
         font-weight: 700;
         letter-spacing: 0.2em;
         opacity: 0;
