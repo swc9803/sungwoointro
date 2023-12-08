@@ -21,7 +21,7 @@ svg {
   cursor: pointer;
   transition: all 0.5s;
   &:hover {
-    scale: 1.3;
+    scale: 1.2;
   }
 }
 </style>

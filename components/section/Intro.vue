@@ -265,7 +265,7 @@ onMounted(() => {
 .container {
   position: relative;
   width: 100%;
-  height: calc(var(--vh) * 100);
+  height: 100vh;
   background: #111111;
   .svg-wrapper {
     position: relative;
