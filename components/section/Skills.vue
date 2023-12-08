@@ -180,6 +180,15 @@ $colors: #c8ffcd, #c2e6ff, #bffff4, #ffd9d2, #ffe3fc, #feffd0, #f7ffc7, #ffffff,
         letter-spacing: 0.2em;
         opacity: 0;
         transition: opacity 0.5s;
+        @media (max-width: 1240px) {
+          font-size: 1em;
+        }
+        @media (max-width: 768px) {
+          font-size: 0.875em;
+        }
+        @media (max-width: 480px) {
+          font-size: 0.75em;
+        }
       }
     }
   }
