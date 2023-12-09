@@ -8,18 +8,26 @@
       <Codepen />
       <p>Codepen</p>
     </div>
+    <div @click="goToEmail">
+      <Email />
+      <p>Email</p>
+    </div>
   </div>
 </template>
 
 <script setup>
 import Github from "@/assets/svg/infoGithub.vue";
 import Codepen from "@/assets/svg/infoCodepen.vue";
+import Email from "@/assets/svg/infoEmail.vue";
 
 const goToGit = () => {
   open("https://github.com/swc9803");
 };
 const goToCodepen = () => {
   open("https://codepen.io/swc9803/pens/public");
+};
+const goToEmail = () => {
+  open("mailto:swc9803@gmail.com");
 };
 </script>
 

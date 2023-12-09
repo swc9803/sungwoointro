@@ -40,6 +40,7 @@
           <div :ref="textRef" class="text-wrapper">
             <p class="sub-title">{{ item.subTitle }}</p>
             <p class="description">{{ item.description }}</p>
+            {{ item.skills }}
             <div class="svg-wrapper">
               <Home @click="goToPath(item.path)" />
               <Github v-if="item.github" @click="goToPath(item.pathGit)" />
@@ -67,6 +68,12 @@ import Tommy3 from "@/assets/img/projects/amazing3.webp";
 import Lotteria1 from "@/assets/img/projects/lotteria1.webp";
 import Lotteria2 from "@/assets/img/projects/lotteria2.webp";
 import Lotteria3 from "@/assets/img/projects/lotteria3.webp";
+import Law1 from "@/assets/img/projects/law1.webp";
+import Law2 from "@/assets/img/projects/law2.webp";
+import Law3 from "@/assets/img/projects/law3.webp";
+import Hello1 from "@/assets/img/projects/hello1.webp";
+import Hello2 from "@/assets/img/projects/hello2.webp";
+import Hello3 from "@/assets/img/projects/hello3.webp";
 import Wemix1 from "@/assets/img/projects/wemix1.webp";
 import Wemix2 from "@/assets/img/projects/wemix2.webp";
 import Wemix3 from "@/assets/img/projects/wemix3.webp";
@@ -134,7 +141,9 @@ const projects = [
   },
   {
     title: "Introduce Site",
-    src: "",
+    src1: "",
+    src2: "",
+    src3: "",
     subTitle: "3D 캐릭터를 움직이며 확인할 수 있는 소개 사이트입니다.",
     description: "fish",
     skills: [
@@ -147,6 +156,31 @@ const projects = [
     github: true,
     path: "",
     pathGit: "https://github.com/swc9803/intro-fish",
+  },
+  {
+    title: "LAW 24",
+    src1: Law1,
+    src2: Law2,
+    src3: Law3,
+    subTitle: "사용자와 변호사를 자동으로 매칭시켜주는 사이트입니다.",
+    description:
+      "퍼블리셔와 Git으로 협업하는 방법을 확실하게 이해하게 된 프로젝트 입니다. branch를 새로 만들어 충돌이 발생하지 않도록 했고, 빠르게 작업을 완료할 수 있었습니다.",
+    skills: [{ skill: "Nuxt" }, { skill: "Gsap" }, { skill: "Firebase" }],
+    site: true,
+    path: "https://law24-prototype.firebaseapp.com",
+  },
+  {
+    title: "Hello 체험단",
+    src1: Hello1,
+    src2: Hello2,
+    src3: Hello3,
+    subTitle:
+      "브랜드의 상품을 체험하거나, 방문해 SNS에 포스팅하는 체험단을 위한 사이트입니다.",
+    description:
+      "Nuxt의 동적 라우팅을 하는 방법을 배우게 되었고, 디자이너와 협업해 일관된 디자인과 기능을 사용자에게 제공하도록 만들었습니다.",
+    skills: [{ skill: "Nuxt" }, { skill: "Gsap" }, { skill: "Firebase" }],
+    site: true,
+    path: "https://togo-test-2dd4a.firebaseapp.com",
   },
   {
     title: "Wemix3.0 Linked with Screen Site",
