@@ -297,7 +297,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .container {
   padding: 60px 0 100px 0;
-  background: rgb(0, 112, 0);
+  background: #111111;
   @media (max-width: 1240px) {
     padding: 60px 20px;
   }
@@ -317,9 +317,9 @@ onMounted(() => {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    border: 5px solid yellow;
+    border: 5px solid rgb(255, 255, 255);
     border-radius: 1em;
-    background: rgb(255, 209, 209);
+    background: rgb(230, 219, 219);
     @media (max-width: 768px) {
       gap: 20px;
     }

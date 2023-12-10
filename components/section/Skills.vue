@@ -119,7 +119,7 @@ $colors: #c8ffcd, #c2e6ff, #bffff4, #ffd9d2, #ffe3fc, #feffd0, #f7ffc7, #ffffff,
 
 .container {
   padding: 60px 0 100px 0;
-  background: rgb(0, 130, 170);
+  background: #111111;
   @media (max-width: 1240px) {
     padding: 60px 20px;
   }
