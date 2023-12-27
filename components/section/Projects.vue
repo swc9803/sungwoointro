@@ -71,6 +71,9 @@ import Tommy3 from "@/assets/img/projects/amazing3.webp";
 import Lotteria1 from "@/assets/img/projects/lotteria1.webp";
 import Lotteria2 from "@/assets/img/projects/lotteria2.webp";
 import Lotteria3 from "@/assets/img/projects/lotteria3.webp";
+import Fish1 from "@/assets/img/projects/fish1.webp";
+import Fish2 from "@/assets/img/projects/fish2.webp";
+import Fish3 from "@/assets/img/projects/fish3.webp";
 import Law1 from "@/assets/img/projects/law1.webp";
 import Law2 from "@/assets/img/projects/law2.webp";
 import Law3 from "@/assets/img/projects/law3.webp";
@@ -134,15 +137,16 @@ const projects = [
   },
   {
     title: "Introduce Site",
-    src1: "",
-    src2: "",
-    src3: "",
+    src1: Fish1,
+    src2: Fish2,
+    src3: Fish3,
     subTitle: "3D 캐릭터를 움직이며 확인할 수 있는 소개 사이트입니다.",
-    description: "fish",
+    description:
+      "카카오의 인터랙티브 콘텐츠인 '집사는 왜 월요일이 싫을까'에 감명받아 제작한 사이트입니다. Three.js의 Raycaster를 이용해 좌표값을 계산한 후 3D Model이 움직이도록 했습니다.",
     skills: "Nuxt, Gsap, Three.js, Firebase",
     site: true,
     github: true,
-    path: "",
+    path: "https://sungwoointro.com",
     pathGit: "https://github.com/swc9803/intro-fish",
   },
   {
@@ -319,7 +323,7 @@ onMounted(() => {
     margin: 0 auto;
     border: 5px solid rgb(255, 255, 255);
     border-radius: 1em;
-    background: rgb(230, 219, 219);
+    background: rgb(228, 219, 219);
     @media (max-width: 768px) {
       gap: 20px;
     }
@@ -356,6 +360,7 @@ onMounted(() => {
               width: 100%;
               max-height: 250px;
               object-fit: contain;
+              cursor: pointer;
               @media (max-width: 768px) {
                 max-height: 330px;
               }
