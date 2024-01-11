@@ -121,7 +121,7 @@ const projects = [
       "공식 출시한 Nuxt3로 seo 최적화하여 제작했습니다. 처음 Nuxt3의 공식 출시로 auto import와 auto router setting 등이 편리해졌습니다. 하지만 아직 정보가 제한적이어서 Stack Overflow와 오픈 채팅을 통해 현직자들에게 질문하여 어려움을 해결했습니다. \n\n Apple 사이트처럼 창의적으로 만들자는 대표님의 긍지와 뜻이 맞아 제가 제작했던 어느 사이트보다 많은 인터렉션을 넣어 창의적이고 재미있는 사이트를 제작했습니다. \n\n(2024년 1월 오픈 예정)",
     skills: "Nuxt, Gsap, Swiper, Firebase",
     site: true,
-    path: "https://amzg.vc",
+    path: "https://amazingvictoria.com",
   },
   {
     title: "Lotteria Font",
@@ -270,7 +270,7 @@ onMounted(() => {
       stagger: 0.1,
       duration: 1,
       ease: "bounce",
-    },
+    }
   );
 
   imgArray.value.forEach((img, i) => {
